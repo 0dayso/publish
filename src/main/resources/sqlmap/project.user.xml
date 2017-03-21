@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.publish.mapper.ProjectUserMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result_map" type="com.shinemo.publish.client.ProjectUser" >
+		<id column="id" property="id"/>
+		<result property="projectId" column="project_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="type" column="type"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, project_id, user_id, type, gmt_create, gmt_modified
+	</sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="projectId != null">and project_id = #{projectId}</if>
+					<if test="userId != null">and user_id = #{userId}</if>
+					<if test="type != null">and type = #{type}</if>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+
+	<!-- 查询结果集 -->
+    <select id="find" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.ProjectUserQuery">
+        select
+        <include refid="columns"/>
+        from project_user
+        <include refid="conditions"/>
+        <if test="orderByType != null and orderByType != ''"> order by ${orderByType}</if>
+        <if test="paging !=null">
+            limit #{startRow, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result_map" parameterType="com.shinemo.publish.client.ProjectUserQuery">
+        select
+        <include refid="columns"/>
+        from project_user
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.publish.client.ProjectUserQuery">
+        select count(*) from project_user
+        <include refid="conditions"/>
+    </select>
+
+	<!-- 删除 -->
+    <delete id="delete" parameterType="com.shinemo.publish.client.ProjectUserQuery">
+        delete from project_user where id = #{id}
+    </delete>
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.publish.client.ProjectUser">
+        insert into
+		project_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+                    <if test="projectId != null">
+						project_id,
+					</if>
+                    <if test="userId != null">
+						user_id,
+					</if>
+                    <if test="type != null">
+						type,
+					</if>
+					gmt_create,
+					gmt_modified,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    <if test="projectId != null">
+						#{projectId, jdbcType=BIGINT},
+                    </if>
+                    <if test="userId != null">
+						#{userId, jdbcType=BIGINT},
+                    </if>
+                    <if test="type != null">
+						#{type, jdbcType=INTEGER},
+                    </if>
+                    now(),
+                    now(),
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.publish.client.ProjectUser">
+        UPDATE project_user
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId, jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId, jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=INTEGER},
+            </if>
+            gmt_modified = now()
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

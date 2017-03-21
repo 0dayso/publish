@@ -1,0 +1,301 @@
+<div class="-page-container"></div>
+<script src="./assets/js/fragment/publish-audit.js" async="async"></script>
+<script class="-add-dialog-template" type="text/tpl">
+<div class="dialog-content">
+<div class="p-10px fz-14px form-list">
+    <form class="cf bs-bb">
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c mr-5px">
+                <header class="block-header bor-b-green">
+                    <i class="iconfont icon-menu mr-5px"></i>
+                    <span>项目概述</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">工程名字</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input  name="name" type="text" placeholder="工程名字">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">标题</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="title" type="text" placeholder="标题">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">描述</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="descr" class="h-60px" placeholder="描述信息"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">Git地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="git" type="text"  placeholder="git地址" />
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布类型</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="type" class="-project-type" placeholder="发布类型">
+                                <option value="0">Java资源</option>
+                                <option value="1">前端资源</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="ownerId" class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">测试负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select class="-select-m" name="testId" style="width:100%"  placeholder="测试成员"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 项目资源 部分表单 ！ -->
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c ml-5px">
+                <header class="block-header bor-b-base-red">
+                    <i class="iconfont icon-home mr-5px"></i>
+                    <span>项目资源</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">源码目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="sourcePath" placeholder="Git源文件目录">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="fileName" placeholder="需要同步的文件/路径">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="targetPath" placeholder="目标机器文件目录">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preHost" class="h-60px" placeholder="预发机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="onlineHost" class="h-60px" placeholder="线上机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div  class="-java-project">
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">编译日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="buildLog" class="h-60px" placeholder="编译日志目录"></textarea>
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">程序日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="applog" class="h-60px" placeholder="应用日志目录"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="split-line ml-10px mr-10px ta-c lh-200 text-base-red">
+                        <i class="iconfont icon-power mr-5px"></i>
+                        <span>高级任务</span>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布前脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="beforeSync" class="h-60px" name="beforeSync" placeholder="发布之前任务"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布后脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="afterSync" class="h-60px" name="afterSync" placeholder="发布之后任务"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</script>
+<script class="-edit-dialog-template" type="text/tpl">
+<div class="dialog-content">
+<div class="p-10px fz-14px form-list">
+    <form class="cf bs-bb">
+        <input type="hidden" name="id" />
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c mr-5px">
+                <header class="block-header bor-b-green">
+                    <i class="iconfont icon-menu mr-5px"></i>
+                    <span>项目概述</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">工程名字</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input  name="name" type="text" placeholder="工程名字">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">标题</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="title" type="text" placeholder="标题">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">描述</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="descr" class="h-60px" placeholder="描述信息"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">Git地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="git" type="text"  placeholder="git地址" />
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布类型</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="type" class="-project-type" placeholder="发布类型">
+                                <option value="0">Java资源</option>
+                                <option value="1">前端资源</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="ownerId" class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">测试负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select class="-select-m" name="testId" style="width:100%"  placeholder="测试成员"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 项目资源 部分表单 ！ -->
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c ml-5px">
+                <header class="block-header bor-b-base-red">
+                    <i class="iconfont icon-home mr-5px"></i>
+                    <span>项目资源</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">源码目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="sourcePath" placeholder="Git源文件目录">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="fileName" placeholder="需要同步的文件/路径">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="targetPath" placeholder="目标机器文件目录">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preHost" class="h-60px" placeholder="预发机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="onlineHost" class="h-60px" placeholder="线上机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div  class="-java-project">
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">编译日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="buildLog" class="h-60px" placeholder="编译日志目录"></textarea>
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">程序日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="appLog" class="h-60px" placeholder="应用日志目录"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="split-line ml-10px mr-10px ta-c lh-200 text-base-red">
+                        <i class="iconfont icon-power mr-5px"></i>
+                        <span>高级任务</span>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布前脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="beforeSync" class="h-60px" name="beforeSync" placeholder="发布之前任务"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布后脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="afterSync" class="h-60px" name="afterSync" placeholder="发布之后任务"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</script>
+
+<!-- 添加项目成员对话框 -->
+<script class="-add-member-dialog" type="text/tpl">
+    <div class="dialog-content">
+        <div class=" fz-14px">
+            <div class="cf p-10px">
+                <div class="w-70 fl-l  mr-10px">
+                    <select class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                </div>
+                <div class="fl-l ta-r fz-14px" >
+                    <span id="add-member" class="btn fw-n text-base-red">
+                        <i class="iconfont icon-add va-m"></i>
+                        <span class="va-m">添加成员</span>
+                    </span>
+                </div>
+            </div>
+            <div class="-m-grid-container"></div>
+        </div>
+    </div>
+</script>
+
+<!-- 验证 对话框 -->
+
+<script class="-validation-dialog" type="text/tpl">
+    <div class="dialog-content h-100px"></div>
+</script>

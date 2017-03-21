@@ -1,0 +1,124 @@
+<!--<link type="text/css" rel="stylesheet" href="./assets/css/fragment-css/project.css">-->
+<div class="-page-container">
+    <div class="fz-14px form-list bs-bb">
+        <form class="cf">
+            <!-- 项目资源 部分表单 ！ -->
+            <div class="mb-10px  d-ib  w-40 fl-l">
+                <div class="w-100 min-h-300px bor-cor-g-c">
+                    <header class="block-header bor-b-base-red">
+                        <i class="iconfont icon-info mr-5px"></i>
+                        <span>发布单基本信息</span>
+                    </header>
+                    <div style="height: 332px;">
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">所属项目</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="title" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">项目类型</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="type" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">发布单标题</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="publishTitle" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">git 分支</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="gitBranch" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">git 版本</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="gitVersion" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">发布单状态</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="status" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">修改时间</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <input type="text" name="gmtModified" readonly class="bor-n-i">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-20px cf">
+                        <div class="fl-l">
+                            <span class="btn btn-success ml-10px mr-10px -pre-publish">
+                                <i class="iconfont icon-warn"></i>
+                                <span>预发</span>
+                            </span>
+                        </div>
+                        <div class="fl-l">
+                            <span class="btn btn-success btn-warning  ml-10px mr-10px -apply-online-btn">
+                                <i class="iconfont icon-diqu"></i>
+                                <span>申请上线</span>
+                            </span>
+                        </div>
+                        <div class="fl-l">
+                            <span class="btn btn-danger  ml-10px mr-10px -revert-btn d-n">
+                                <i class="iconfont icon-undo"></i>
+                                <span>回滚</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 项目资源 部分表单 ！ -->
+            <div class="mb-10px  d-ib w-60 fl-l pl-10px">
+                <div class="w-100 min-h-300px bor-cor-g-c min-w-500px">
+                    <header class="block-header bor-b-green">
+                        <i class="iconfont icon-warn mr-5px"></i>
+                        <span>发布状态信息</span>
+                    </header>
+                    <div class="h-400px ov-a -step-status-container"></div>
+                </div>
+            </div>
+        </form>
+        <!-- log 日志 --->
+        <div class="mt-10px -log-tab-container">
+            <header class="bg-base-red cor-w p-10px fz-14px" >
+                <i class="iconfont icon-code"></i>
+                <span>日志</span>
+            </header>
+            <div class="tab mt-5px">
+                <ul class="cf header-container">
+                    <li class="fl-l ml-10px tab-header active">发布日志</li>
+                    <li class="fl-l tab-header">
+                        <span>编译日志</span>
+                        <i class="iconfont icon-refresh1 tab-refresh fz-12px-i"></i>
+                    </li>
+                </ul>
+                <div class="tab-container h-400px ov-a">
+                    <div class="tab-body p-10px"></div>
+                    <div class="tab-body d-n p-10px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./assets/js/fragment/publish-action.js" async="async"></script>
+<script type="text/tpl" class="-publish-status-tpl">
+    <div class="-pc-list">
+        <header class="p-10px pc-info-header">
+            <span>{preOrOnline} : <code class="-ip-code-container" >{host}</code></span>
+            <i class="iconfont icon-minus icon-plus fl-r btn bor-n-i -collapsed" style="margin-top: -3px"></i>
+            <i title="查看日志" class="iconfont icon-log fl-r btn bor-n-i -app-log mr-5px"  style="margin-top: -3px"></i>
+        </header>
+        <ul class="pl-20px -info-body">
+            {check}{update}{build}{beforeSync}{syncFile}{afterSync}
+        </ul>
+    </div>
+</script>

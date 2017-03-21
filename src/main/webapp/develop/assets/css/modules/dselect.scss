@@ -1,0 +1,45 @@
+.DS {
+  min-height: 30px;
+  line-height: 30px;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+}
+
+.DS .itemIcon {
+  margin-right: 3px;
+}
+
+.DS .ds-panel {
+  left: -1px;
+  width: 100%;
+  max-height: 140px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-sizing: content-box;
+}
+
+.DS .ds-panel .ds-option {
+  cursor: pointer;
+  line-height: 1.5;
+  min-width: 25px;
+  padding: 3px 5px;
+}
+
+.DS .ds-panel .ds-option:hover {
+  background-color: #ffffc0;
+}
+
+.DS .ds-panel .ds-item-text {
+  color: #333;
+}
+
+.DS .ds-out-show-line {
+  white-space: nowrap;
+}
+
+.DS .ds-arrow-icon {
+  border-top: 7px solid #333;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  display: inline-block;
+}

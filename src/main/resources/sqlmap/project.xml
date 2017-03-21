@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.publish.mapper.ProjectMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result_map" type="com.shinemo.publish.client.Project" >
+		<id column="id" property="id"/>
+		<result property="title" column="title"/>
+		<result property="name" column="name"/>
+		<result property="descr" column="descr"/>
+		<result property="git" column="git"/>
+		<result property="preHost" column="pre_host"/>
+		<result property="onlineHost" column="online_host"/>
+		<result property="ownerId" column="owner_id"/>
+		<result property="testId" column="test_id"/>
+		<result property="type" column="type"/>
+		<result property="sourcePath" column="source_path"/>
+		<result property="targetPath" column="target_path"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="fileName" column="file_name"/>
+		<result property="buildLog" column="build_log"/>
+		<result property="appLog" column="app_log"/>
+		<result property="beforeSync" column="before_sync"/>
+		<result property="afterSync" column="after_sync"/>
+		<result property="remoteUser" column="remote_user"/>
+		<result property="needApproval" column="need_approval"/>
+		<result property="preBuild" column="pre_build"/>
+		<result property="onlineBuild" column="online_build"/>
+		<result property="env" column="env"/>
+		<result property="checkUri" column="check_uri"/>
+		<result property="stat" column="stat"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, title, name, descr, git, pre_host, online_host, owner_id, test_id, type, source_path, target_path, gmt_create, gmt_modified, file_name, build_log, app_log, before_sync, after_sync,remote_user,need_approval,pre_build,online_build,env,check_uri,stat
+	</sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="name != null">and name = #{name}</if>
+					<if test="title != null">and title like CONCAT('${title}','%')</if>
+					<if test="ownerId != null">and owner_id = #{ownerId}</if>
+					<if test="testId != null">and test_id = #{testId}</if>
+					<if test="type != null">and type = #{type}</if>
+					<if test="env != null">and env = #{env}</if>
+					<if test="stat != null">and stat = #{stat}</if>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+
+	<!-- 查询结果集 -->
+    <select id="find" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.ProjectQuery">
+        select
+        <include refid="columns"/>
+        from project
+        <include refid="conditions"/>
+        <if test="orderByType != null and orderByType != ''"> order by ${orderByType}</if>
+        <if test="paging !=null">
+            limit #{startRow, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+    
+    
+    <!-- 查询结果集 -->
+    <select id="listByUid" resultMap="result_map"
+             parameterType="java.util.Map">
+        select
+        p.*
+        from project p ,project_user pu 
+        where p.id = pu.project_id and pu.user_id = #{userId}
+        limit #{limit}
+    </select>
+  
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result_map" parameterType="com.shinemo.publish.client.ProjectQuery">
+        select
+        <include refid="columns"/>
+        from project
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.publish.client.ProjectQuery">
+        select count(*) from project
+        <include refid="conditions"/>
+    </select>
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.publish.client.Project">
+        insert into
+		project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+                    <if test="title != null">
+						title,
+					</if>
+                    <if test="name != null">
+						name,
+					</if>
+                    <if test="descr != null">
+						descr,
+					</if>
+                    <if test="git != null">
+						git,
+					</if>
+                    <if test="preHost != null">
+						pre_host,
+					</if>
+                    <if test="onlineHost != null">
+						online_host,
+					</if>
+                    <if test="ownerId != null">
+						owner_id,
+					</if>
+                    <if test="testId != null">
+						test_id,
+					</if>
+                    <if test="type != null">
+						type,
+					</if>
+                    <if test="sourcePath != null">
+						source_path,
+					</if>
+                    <if test="targetPath != null">
+						target_path,
+					</if>
+					gmt_create,
+					gmt_modified,
+                    <if test="fileName != null">
+						file_name,
+					</if>
+					<if test="buildLog != null">
+						build_log,
+					</if>
+					<if test="appLog != null">
+						app_log,
+					</if>
+					<if test="beforeSync != null">
+						before_sync,
+					</if>
+					<if test="afterSync != null">
+						after_sync,
+					</if>
+					<if test="remoteUser != null">
+						remote_user,
+					</if>
+					<if test="needApproval != null">
+						need_approval,
+					</if>
+					<if test="preBuild != null">
+						pre_build,
+					</if>
+					<if test="onlineBuild != null">
+						online_build,
+					</if>
+					<if test="env != null">
+						env,
+					</if>
+					<if test="checkUri != null">
+						check_uri,
+					</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    <if test="title != null">
+						#{title, jdbcType=VARCHAR},
+                    </if>
+                    <if test="name != null">
+						#{name, jdbcType=VARCHAR},
+                    </if>
+                    <if test="descr != null">
+						#{descr, jdbcType=VARCHAR},
+                    </if>
+                    <if test="git != null">
+						#{git, jdbcType=VARCHAR},
+                    </if>
+                    <if test="preHost != null">
+						#{preHost, jdbcType=VARCHAR},
+                    </if>
+                    <if test="onlineHost != null">
+						#{onlineHost, jdbcType=VARCHAR},
+                    </if>
+                    <if test="ownerId != null">
+						#{ownerId, jdbcType=BIGINT},
+                    </if>
+                    <if test="testId != null">
+						#{testId, jdbcType=BIGINT},
+                    </if>
+                    <if test="type != null">
+						#{type, jdbcType=INTEGER},
+                    </if>
+                    <if test="sourcePath != null">
+						#{sourcePath, jdbcType=VARCHAR},
+                    </if>
+                    <if test="targetPath != null">
+						#{targetPath, jdbcType=VARCHAR},
+                    </if>
+                    now(),
+                    now(),
+                    <if test="fileName != null">
+						#{fileName, jdbcType=VARCHAR},
+                    </if>
+                    <if test="buildLog != null">
+						#{buildLog, jdbcType=VARCHAR},
+                    </if>
+                    <if test="appLog != null">
+						#{appLog, jdbcType=VARCHAR},
+                    </if>
+                    <if test="beforeSync != null">
+						#{beforeSync, jdbcType=VARCHAR},
+                    </if>
+                    <if test="afterSync != null">
+						#{afterSync, jdbcType=VARCHAR},
+                    </if>
+                    <if test="remoteUser != null">
+						#{remoteUser, jdbcType=VARCHAR},
+                    </if>
+                    <if test="needApproval != null">
+						#{needApproval, jdbcType=INTEGER},
+                    </if>
+                    <if test="preBuild != null">
+						#{preBuild, jdbcType=VARCHAR},
+                    </if>
+                    <if test="onlineBuild != null">
+						#{onlineBuild, jdbcType=VARCHAR},
+                    </if>
+                    <if test="env != null">
+						#{env, jdbcType=INTEGER},
+                    </if>
+                    <if test="checkUri != null">
+						#{checkUri, jdbcType=VARCHAR},
+                    </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.publish.client.Project">
+        UPDATE project
+        <set>
+            <if test="title != null">
+                title = #{title, jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="descr != null">
+                descr = #{descr, jdbcType=VARCHAR},
+            </if>
+            <if test="git != null">
+                git = #{git, jdbcType=VARCHAR},
+            </if>
+            <if test="preHost != null">
+                pre_host = #{preHost, jdbcType=VARCHAR},
+            </if>
+            <if test="onlineHost != null">
+                online_host = #{onlineHost, jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null">
+                owner_id = #{ownerId, jdbcType=BIGINT},
+            </if>
+            <if test="testId != null">
+                test_id = #{testId, jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=INTEGER},
+            </if>
+            <if test="sourcePath != null">
+                source_path = #{sourcePath, jdbcType=VARCHAR},
+            </if>
+            <if test="targetPath != null">
+                target_path = #{targetPath, jdbcType=VARCHAR},
+            </if>
+            gmt_modified = now(),
+            <if test="fileName != null">
+                file_name = #{fileName, jdbcType=VARCHAR},
+            </if>
+            <if test="buildLog != null">
+                build_log = #{buildLog, jdbcType=VARCHAR},
+            </if>
+            <if test="appLog != null">
+                app_log = #{appLog, jdbcType=VARCHAR},
+            </if>
+            <if test="beforeSync != null">
+                before_sync = #{beforeSync, jdbcType=VARCHAR},
+            </if>
+            <if test="afterSync != null">
+                after_sync = #{afterSync, jdbcType=VARCHAR},
+            </if>
+            <if test="remoteUser != null">
+                remote_user = #{remoteUser, jdbcType=VARCHAR},
+            </if>
+            <if test="needApproval != null">
+                need_approval = #{needApproval, jdbcType=INTEGER},
+            </if>
+            <if test="preBuild != null">
+                pre_build = #{preBuild, jdbcType=VARCHAR},
+            </if>
+            <if test="onlineBuild != null">
+                online_build = #{onlineBuild, jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                env = #{env, jdbcType=INTEGER},
+            </if>
+            <if test="checkUri != null">
+                check_uri = #{checkUri, jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

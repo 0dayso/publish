@@ -1,0 +1,48 @@
+
+<div class="-page-container"></div>
+<script src="./assets/js/fragment/user.js" async="async"></script>
+<script class="-edit-dialog-template" type="text/tpl">
+    <div class="dialog-content p-20px">
+        <form class="">
+            <input type="hidden" name="id" />
+            <div class="item">
+                <label>
+                    <span>用户名：</span>
+                    <input type="text" disabled="true" class="-user-name"  validations="required;minLength[6]" placeholder="用户名" />
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>用户状态：</span>
+                    <select name="flag" validations="required" >
+                        <option value="1">正常</option>
+                        <option value="0">禁用</option>
+                        <option value="-1">删除</option>
+                    </select>
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>角色描述：</span>
+                    <select name="role" validations="required" >
+                        <option value="">选择一个描述</option>
+                        <option value="java">java</option>
+                        <option value="前端">前端</option>
+                        <option value="测试">测试</option>
+                    </select>
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>用户类型：</span>
+                    <select name="type" validations="required" >
+                        <option value="">请选择类型</option>
+                        <option value="0">用户</option>
+                        <option value="1">管理员</option>
+                        <option value="2">超级管理员</option>
+                    </select>
+                </label>
+            </div>
+        </form>
+    </div>
+</script>

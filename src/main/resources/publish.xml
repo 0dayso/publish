@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       "
+	default-autowire="byName">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="com.shinemo.publish.service.impl"/>
+	<import resource="classpath:datasource-mysql.xml" />
+	
+	<bean id="redisNode" class="com.shinemo.publish.redis.domain.RedisNode">
+		<constructor-arg name="redisConfig" value="${redisConfig}" />
+	</bean>
+
+	<bean id="redisService" class="com.shinemo.publish.redis.service.impl.RedisServiceImpl">
+		<constructor-arg name="node" ref="redisNode" />
+	</bean>
+	
+	
+	<bean id="aaceCenter" abstract="true" init-method="init">
+        <property name="uri" value="${aace.center.url}"/>
+    </bean>
+
+    <!-- <bean id="ddbClient" class="com.shinemo.Aace.ddb.DDBClient" parent="aaceCenter"/>  -->
+    
+    <bean id="groupAdminClient" class="com.shinemo.Aace.groupadmin.client.GroupAdminClient" parent="aaceCenter">
+		<property name="proxy" value="GroupAdmin"/>
+    </bean>
+	<!-- <bean id="aaceServer" class="com.shinemo.myAace.AaceServer"/>
+	
+	<bean id="myaceUserModuleService" class="com.shinemo.spring.AaceConsumerBean" init-method="init">
+		<property name="uri" value="${aace.consumer.prefix}${power.aace.proxy.name}"/>
+		<property name="interfaceName" value="com.shinemo.power.client.user.service.UserModuleService"/>
+		<property name="aaceServer" ref="aaceServer"/>
+	</bean>
+	
+	<bean id="myaceUserPermissionService" class="com.shinemo.spring.AaceConsumerBean" init-method="init">
+		<property name="uri" value="${aace.consumer.prefix}${power.aace.proxy.name}"/>
+		<property name="interfaceName" value="com.shinemo.power.client.user.service.UserPermissionService"/>
+		<property name="aaceServer" ref="aaceServer"/>
+	</bean>
+	
+	<bean id="myaceUserService" class="com.shinemo.spring.AaceConsumerBean" init-method="init">
+		<property name="uri" value="${aace.consumer.prefix}${power.aace.proxy.name}"/>
+		<property name="interfaceName" value="com.shinemo.power.client.user.service.UserService"/>
+		<property name="aaceServer" ref="aaceServer"/>
+	</bean>
+	
+	<bean id="myaceMetaModuleService" class="com.shinemo.spring.AaceConsumerBean" init-method="init">
+		<property name="uri" value="${aace.consumer.prefix}${power.aace.proxy.name}"/>
+		<property name="interfaceName" value="com.shinemo.power.client.module.service.MetaModuleService"/>
+		<property name="aaceServer" ref="aaceServer"/>
+	</bean>
+	
+	<bean id="myaceModulePermissionService" class="com.shinemo.spring.AaceConsumerBean" init-method="init">
+		<property name="uri" value="${aace.consumer.prefix}${power.aace.proxy.name}"/>
+		<property name="interfaceName" value="com.shinemo.power.client.module.service.ModulePermissionService"/>
+		<property name="aaceServer" ref="aaceServer"/>
+	</bean>
+
+	<bean id="aaceContextHolder" class="com.shinemo.power.client.common.SpringContextHolder"/> -->
+
+</beans>

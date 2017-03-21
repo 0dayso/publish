@@ -1,0 +1,58 @@
+<div class="-page-container">
+    <div class="pb-10px form-list">
+        <form class="cf bs-bb -search-form">
+            <div class="cf fl-l mt-5px">
+                <div class="fl-l ta-r mt-5px fz-14px w-90px">操作机器</div>
+                <div class="w-270px fl-r pl-20px">
+                    <select name="hostinfo" validations="required" ></select>
+                </div>
+            </div>
+            <div class="cf fl-l mt-5px h-30px">
+                <div class="fl-l ta-r mt-5px fz-14px w-150px">查看文件长度（行）</div>
+                <div class="w-120px fl-r pl-20px">
+                    <input type="text" name="lines" value="1000" validations="required;number" />
+                </div>
+            </div>
+            <div class="cf fl-l mt-5px h-30px" style="width: 620px">
+                <div class="fl-l ta-r mt-5px fz-14px w-90px">输入根目录</div>
+                <div class="fl-r pl-20px" style="width: 530px">
+                    <input type="text" name="dir" validations="required" />
+                </div>
+            </div>
+            <div class="fl-l ml-10px mt-5px">
+                <a class="btn -ser-btn" href="javascript:void(0);">
+                    <i class="iconfont icon-search"></i>
+                    <span>搜索</span>
+                </a>
+            </div>
+        </form>
+    </div>
+    <div class="fz-14px bs-bb bor-cor-g-c cf">
+        <div class="d-ib  w-25 fl-l h-100" style="border-right: 1px solid #ccc;">
+            <div class="w-100">
+                <header class="block-header bor-b-base-red">
+                    <i class="iconfont icon-search1 mr-5px"></i>
+                    <span>选择文件</span>
+                </header>
+                <div  class="-container-height ov-a">
+                    <ul class="tree ml-20px"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="d-ib w-75 fl-l  h-100">
+            <div class="w-100">
+                <header class="block-header bor-b-green">
+                    <i class="iconfont icon-rizhi mr-5px"></i>
+                    <span>文件内容</span>
+                </header>
+                <div class="-container-height ov-a">
+                    <div class="path-container lh-200 pos-r ov-h">
+                        <div class="path lh-200 fl-l pl-10px"></div>
+                    </div>
+                    <div class="-log-file-container ov-a"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./assets/js/fragment/log-file-902e8cad89.js" async="async"></script>

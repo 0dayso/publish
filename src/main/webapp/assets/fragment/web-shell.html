@@ -1,0 +1,253 @@
+<div class="pb-10px form-list">
+    <form class="cf bs-bb -search-form">
+        <div class="cf fl-l mt-5px">
+            <div class="fl-l ta-r mt-5px fz-14px w-120px">操作机器</div>
+            <div class="w-270px fl-r pl-20px">
+                <select name="machineId" validations="required" ></select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="w-100 min-h-300px bor-cor-g-c pos-r">
+    <header class="block-header bor-b-green">
+        <i class="iconfont icon-code mr-5px"></i>
+        <span>Shell 操作区</span>
+    </header>
+    <div class="-operate-content ov-a wkit-scrollbar-n" style="color: #fff; background-color: #000">
+        <div class="ta-c pos-a w-100 p-10px" style="color: green; font-weight: bold; background-color: #000">
+            查询快捷键 F3 / Enter 通过&uarr; 和 &darr; 查看以前查询记录 <br/>
+            双击非编辑区 进入编辑 <br/>
+            local command: clear （清空历史） , connect （重新连接） , close （关闭连接） <br/>
+            remote command: pwd netstat ps jps top free cat find awk grep sort sar jstat vmstat iostat du df curl
+        </div>
+        <div class="panel p-10px" style="margin-top: 70px"></div>
+        <div class="-input-target pb-30px pl-10px pr-10px" autofocus="true" contenteditable="true"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var mgr = {
+            container: Util.getCurrentTab(),
+            preCommandStr: "command-",
+            recordCommandPos: sessionStorage.length,
+            proxy: {
+                connect: function () {
+                    var isCaiYun = location.hostname.search('jituancaiyun.com') !== -1;
+
+                    return isCaiYun ? 'ws://115.29.208.92:11362/shell' : 'wss://publish.admin.xiaowobangong.com:443/shell'
+                }(),
+                getMachines: '/publish/remoteshell/allHost.do'
+            },
+            init: function () {
+                var me = this,
+                    formDom = me.getFormElem()[0];
+
+                me.container.find('.-operate-content').height($('#page-main').height() - 160);
+                me.getMachineData(function ( data ) {
+                    Util.Form.loadSelectOptions(formDom.machineId, data, '请选择操作机器');
+                });
+
+                me.createConnect();
+                me.bindEvents();
+                me.getInputTarget().focus();
+            },
+            bindEvents: function () {
+                var me = this;
+
+                me.getFormElem().validate();
+                me.getPanel().on('keydown', function ( e ) {
+                    var command = $.trim(me.getInputTarget().text());
+
+                    if ( e.keyCode === 13 || e.keyCode === 114 ) {
+                        e.preventDefault();
+                        if ( command in me.localCommand ) {
+                            me.localCommand[command]();
+                            me.getInputTarget().text('')
+                        } else if ( command && me.getFormElem().validate('validation') ) {
+                            me.getInputTarget().text('')
+                            me.saveCommand(command);
+                            me.commandTarget = $('<span style="color: green">\n' + command + '\n</span>');
+                            me.getResultPanel().append(me.commandTarget);
+
+                            me.sendMsg({
+                                type: 1,
+                                hostinfo: me.getFormElem()[0].machineId.value,
+                                shell: command
+                            });
+                        }
+
+                        // 每次执行查询需要把标记Command 存储位置的值重置为存储的最后一位；
+                        me.recordCommandPos = sessionStorage.length;
+
+                        return false;
+                    }
+
+
+                    // 上下查询记录；上箭头 == 38 ； 下箭头 == 40；
+                    // 上下查询记录不可循环，向上箭头查询到第一个值后不会跳转到最后一个
+                    // 向下箭头会循环；【这么做可以让用户只知道查询记录最开始的位置】
+                    if ( e.keyCode === 38 ) {
+                        me.getInputTarget().text(me.getStorageCommand( me.recordCommandPos > 0 ? --me.recordCommandPos : 0));
+                        e.preventDefault();
+
+                        return false;
+                    } else if ( e.keyCode === 40 ) {
+                        me.getInputTarget()
+                                .text(me.getStorageCommand( me.recordCommandPos < sessionStorage.length
+                                        ? ++me.recordCommandPos : ( me.recordCommandPos = 0)));
+                        e.preventDefault();
+
+                        return false;
+                    }
+                }).on("dblclick click", function (e) {
+                    me.getInputTarget().focus();
+
+                    return false;
+                });
+            },
+            getStorageCommand: function ( id ) {
+                var key = sessionStorage.key(id);
+
+                return key ? sessionStorage.getItem(key) : "";
+            },
+            saveCommand: function ( command ) {
+                var me = this,
+                    len = sessionStorage.length,
+                    key;
+
+                // 查找到之前的相同命令移除后存储最新的命令；
+                while ( len >= 0 ) {
+                    key = sessionStorage.key(--len);
+                    if ( sessionStorage.getItem(key) === command ) {
+                        sessionStorage.removeItem(key);
+
+                        break;
+                    }
+                }
+                // 现在的应用场景中没有在同一毫秒存储多次的场景，所以唯一值不用加固定递增值；
+                sessionStorage.setItem(me.preCommandStr + (+new Date).toString(16), command);
+            },
+            localCommand: {
+                clear: function () {
+                    mgr.getResultPanel().html("");
+                },
+                connect: function () {
+                    mgr.createConnect();
+                },
+                close: function () {
+                    mgr.ws.close();
+                }
+            },
+            getFormElem: function () {
+                var d = this.container.find('form');
+                this.getFormElem = function () {
+                    return d;
+                };
+
+                return d;
+            },
+            createConnect: function () {
+                var me = this;
+
+                window.WebSocket = window.WebSocket || window.MozWebSocket;
+
+                if ( WebSocket ) {
+                    me.ws && me.ws.close && me.ws.close();
+                    me.ws = new WebSocket( me.proxy.connect + '?sid=' + ($.cookie('_sid') || ''));
+                    me.ws.onmessage = function ( e ) {
+                        me.getResultPanel().append('<pre class="pre-line">'+ e.data +'</pre>');
+                        me.getInputTarget().get(0).scrollIntoView(false);
+                    };
+
+                    me.ws.onclose = function () {
+                        me.getResultPanel().append('<div style="color: red">当前建立的WebSocket 链接已经关闭！</div>');
+                    };
+
+                    me.ws.onopen = function () {
+                        me.getResultPanel().append('<div style="color: green">WebSocket 已经成功建立链接！</div>');
+                    };
+
+                    me.ws.onerror = function () {
+                        me.getResultPanel().append('<div style="color: red;">WebSocket Has some errors!!</div>');
+                    }
+                } else {
+                    me.getResultPanel().append('<div style="color: red">您的浏览器不支持WebSocket 协议，请更换浏览器！</div>');
+                }
+            },
+            /**
+             * @param param {object/string} 发送到服务器的参数对象 或字符串；
+             * "{type:1,hostinfo:"+hostinfo+",shell:\""+document.getElementById("message").value+"\"}";
+             */
+            sendMsg: function ( param ) {
+                if ( $.isPlainObject(param) ) {
+                    param = JSON.stringify(param);
+                }
+
+                if( !this.ws || this.ws.readyState != WebSocket.OPEN ) {
+                    this.getResultPanel().append('<div style="color: red">WebSocket 可能还没有创建！！</div>');
+
+                    return false;
+                }
+
+                try {
+                    this.ws.send(param);
+                } catch ( e ) {
+                    this.getResultPanel().append('<div style="color: red">发送数据失败！！</div>');
+                }
+            },
+            getPanel: function () {
+                var d = this.container.find('.-operate-content');
+                this.getPanel = function () {
+                    return d;
+                }
+
+                return d;
+            },
+            getResultPanel: function () {
+                var d = this.getPanel().find('.panel');
+                this.getResultPanel = function () {
+                    return d;
+                }
+
+                return d;
+            },
+            getInputTarget: function () {
+                var d = this.container.find('.-input-target');
+                this.getInputTarget = function () {
+                    return d;
+                }
+
+                return d;
+            },
+            getMachineData: function ( cb ) {
+                var me = this;
+
+                Util.baseAjax({
+                    url: me.proxy.getMachines
+                }, function (json) {
+                    var ret = [],
+                            p, d;
+
+                    json = json || {};
+                    if ( json.success && json.data ) {
+                        d = json.data;
+
+                        for ( p in d ) {
+                            ret.push({
+                                key: d[p],
+                                value: p
+                            });
+                        }
+
+                        $.isFunction(cb) && cb(ret);
+                    }
+
+                });
+            }
+        };
+
+        mgr.init();
+    });
+</script>

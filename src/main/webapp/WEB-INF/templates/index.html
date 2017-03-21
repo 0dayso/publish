@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta charset="utf-8">
+    <title>发布系统</title>
+    <link href="assets/imgs/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="./assets/css/common-87bb2e1504.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/index-03f1af6057.css">
+
+    <!--[if lt IE 9]>
+        <script>
+            window.html5 = {
+                'shivCSS': false,
+                'shivMethods': false
+            }
+        </script>
+        <script src="./assets/js/lib/html5shiv-23e126e677.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .wo-bangong a {
+            color: #036eb7!important;
+        }
+        .wo-bangong .jq-grid .grid-header {
+            color: #036eb7!important;
+        }
+        .wo-bangong .dialog-base-theme .noty_message {
+            background-color: #036eb7!important;
+        }
+        .wo-bangong .dialog-base-theme  {
+            border: 1px solid #036eb7 !important;
+        }
+        .wo-bangong .menu-expand-icon  {
+            color: #036eb7!important;
+        }
+    </style>
+</head>
+<body class="w-100">
+<div id="page-container" class="container w-100 m-a h-100 bs-bb">
+    <header class=" cf header lh-80px cor-w pos-f w-100 z-99">
+        <section class="fl-l pl-50px">
+            <div id="group-logo" class="group-logo d-ib mr-20px"></div>
+            <span id="group-header" class="fz-26px va-m">发布系统</span>
+            <script>
+                void function () {
+                    var isCaiYun = location.hostname.search('jituancaiyun.com') !== -1;
+                    var groupLogoDom = document.getElementById('group-logo');
+                    var groupTextDom = document.getElementById('group-header');
+                    var pContainerDom = document.body;
+
+                    if ( !isCaiYun ) {
+                        if ( groupLogoDom.classList ) {
+                            groupLogoDom.classList.add('wo-group-logo');
+                            pContainerDom.classList.add('wo-bangong');
+                        } else {
+                            groupLogoDom.className = groupLogoDom.className + ' wo-group-logo';
+                            pContainerDom.className = pContainerDom.className + ' wo-bangong';
+                        }
+                        groupTextDom.innerText = '小沃办公发布系统';
+                        document.title = '小沃办公发布系统';
+                    }
+                }();
+            </script>
+        </section>
+        <section class="fl-r cf pr-50px">
+            <div class="fl-l mr-10px">
+                <span class="base-btn bg-dark fw-n">
+                    <i class="iconfont icon-user1 va-m"></i>
+                    <span class="fz-18px  va-m" id="user-name-btn" ></span>
+                </span>
+            </div>
+            <div class="fl-l">
+                <a href="https://acl.admin.jituancaiyun.com/power/user/view/logout.html" target="_self">
+                    <span class="base-btn bg-dark fw-n">
+                        <i class="iconfont icon-tuichu va-m"></i>
+                        <span class="fz-18px  va-m" >退出</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+    </header>
+
+    <div class="">
+        <div id="toggler-menu-bar"  class="pos-f z-99 animated btn"  style="top: 90px; left: 10px">
+            <a class="" title="切换显示隐藏菜单" href="javascript:void(0);">
+                <i class="iconfont icon-menu fz-24px va-m"></i>
+            </a>
+        </div>
+        <nav class="w-200px bor-cor-g-c min-h-100 pos-a menu-nav bg-w pos-f animated z-1">
+            <header class="cf header-menu" style="border-bottom: 1px solid #ccc">
+                <section class="fl-l ml-5px lh-40px">
+                    <!--<a class=" fz-24" href="#">-->
+                    <!--<i class="iconfont icon-login fz-24px"></i>-->
+                    <!--<span class="fw-b"> 菜单 </span>-->
+                    <!--</a>-->
+                </section>
+                <section class="fl-r header-buttons">
+                    <a id="fixed-toggler" class="fixed-layout" href="javascript:void(0);" title="固定">
+                        <i class="iconfont icon-fixed"></i>
+                    </a>
+                </section>
+            </header>
+            <div id="menu-tree-container"></div>
+            <!--<div class="menu-container">-->
+                <!--<ul>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<i class="iconfont icon-jiaoseguanlisanji "></i>-->
+                            <!--<span class="menu-text"> 用户管理 </span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<i class="iconfont icon-mokuaiguanlierji "></i>-->
+                            <!--<span class="menu-text"> 模块管理 </span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)" class="menu-dropdown">-->
+                            <!--<i class="iconfont icon-login "></i>-->
+                            <!--<span class="menu-text"> Dashboard </span>-->
+
+                            <!--<i class="menu-expand-icon"></i>-->
+                        <!--</a>-->
+
+                        <!--<ul class="sub-menu bor-sdw d-n">-->
+                            <!--<li>-->
+                                <!--<a href="power-control.html">-->
+                                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                                    <!--<span class="menu-text"> 权限控制 </span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="power-control.html">-->
+                                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                                    <!--<span class="menu-text"> 权限控制 </span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)" class="menu-dropdown">-->
+                            <!--<i class="iconfont icon-login "></i>-->
+                            <!--<span class="menu-text"> Dashboard </span>-->
+
+                            <!--<i class="menu-expand-icon menu-expand"></i>-->
+                        <!--</a>-->
+
+                        <!--<ul class="sub-menu bor-sdw">-->
+                            <!--<li>-->
+                                <!--<a href="power-control.html">-->
+                                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                                    <!--<span class="menu-text"> 权限控制 </span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="power-control.html">-->
+                                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                                    <!--<span class="menu-text"> 权限控制 </span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0)" class="menu-dropdown">-->
+                    <!--<i class="iconfont icon-login "></i>-->
+                    <!--<span class="menu-text"> Dashboard </span>-->
+
+                    <!--<i class="menu-expand-icon menu-expand"></i>-->
+                    <!--</a>-->
+
+                    <!--<ul class="sub-menu bor-sdw">-->
+                    <!--<li>-->
+                    <!--<a href="power-control.html">-->
+                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                    <!--<span class="menu-text"> 权限控制 </span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="power-control.html">-->
+                    <!--<i class="menu-icon fa fa-rocket"></i>-->
+                    <!--<span class="menu-text"> 权限控制 </span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        </nav>
+    </div>
+    <main id="page-main" role="main" class="m-a min-h-100 bor-sdw bg-cor-w bor-cor-g-c  pt-80px bs-bb" style="padding-left:202px">
+        <header id="main-toolbar-header" class="cf toolbar-header" style="border-bottom: 1px solid #ccc">
+            <section class="fl-l ml-20px lh-40px">
+                <a class=" fz-24" href="#">
+                    <i class="iconfont icon-home "></i>
+                    <span class="fw-b fz-14px"> 主页 </span>
+                </a>
+            </section>
+            <section class="fl-r header-buttons">
+                <a id="fullscreen-toggler" class="sidebar-toggler" href="#" title="全屏">
+                    <i class="iconfont icon-fullscreen1"></i>
+                </a>
+                <a id="refresh-toggler"  class="refresh"title="刷新" href="">
+                    <i class="iconfont icon-refresh"></i>
+                </a>
+            </section>
+        </header>
+        <div id="main-tab-container" class="pt-10px pos-f w-100 h-100" style="padding-right: 204px; padding-bottom: 126px"></div>
+    </main>
+</div>
+
+<script src="assets/js/lib/lib-ef6bb010fb.js"></script>
+
+<script type="text/javascript" src="assets/js/index-58596d73da.js"></script>
+
+</body>
+</html>

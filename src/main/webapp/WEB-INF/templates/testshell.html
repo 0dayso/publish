@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <title>client</title>
+</head>
+</head>
+<script type="text/javascript">
+    function getCookie(cookie_name)
+    {
+        var allcookies = document.cookie;
+        //alert(allcookies)
+        var cookie_pos = allcookies.lastIndexOf(cookie_name);
+        if (cookie_pos != -1)
+        {
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);
+            if (cookie_end == -1)
+            {
+                cookie_end = allcookies.length;
+            }
+            var value = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }
+        return value;
+    }
+
+    var socket;
+
+
+    if(!window.WebSocket){
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if(window.WebSocket){
+        sid = getCookie("_sid");
+        var params = "sid="+sid;
+        socket = new WebSocket("wss://publish.jituancaiyun.com/debug?"+params);
+        socket.onmessage = function(event){
+            var ta = document.getElementById('responseText');
+            
+            var obj = JSON.parse(event.data)
+            
+            if(obj.code==201){
+            	var stat = document.getElementById('stepStat');
+            	stat.innerHTML = "step over";
+            	stat.style.backgroundColor = "red";
+            }
+            else if(obj.code==202){
+            	var stat = document.getElementById('stepStat');
+            	stat.innerHTML = "vm disconnect";
+            	stat.style.backgroundColor = "red";
+            }else if(obj.code==300){
+            	ta.value += obj.data+"\r\n";
+            }else if(obj.code==200){
+            	alert(event.data)
+            }
+        };
+
+        socket.onopen = function(event){
+            var stat = document.getElementById('stat');
+            stat.innerHTML = "WebSoket服务正常!"+"\r\n";
+            stat.style.backgroundColor = "green";
+        };
+
+        socket.onclose = function(event){
+            var stat = document.getElementById('stat');
+            stat.innerHTML = "WebSocket 关闭";
+            stat.style.backgroundColor = "red";
+        };
+    }else{
+        alert("您的浏览器不支持WebSocket协议！");
+    }
+    
+    function get(name){
+    	return document.getElementById(name).value;
+    }
+
+    function send(message){
+        if(!window.WebSocket){return;}
+        if(socket.readyState == WebSocket.OPEN){
+        	sid = getCookie("_sid");
+        	message = "{type:"+get("type")+",sid:"+sid+",className:\""+get("className")+"\",host:\""+get("host")+"\",port:"+get("port")+",line:"+get("line")+",field:\""+get("field")+"\"}";
+            socket.send(message);
+            var stat = document.getElementById('stepStat');
+            stat.innerHTML = "debug...";
+            stat.style.backgroundColor = "green";
+        }else{
+            alert("WebSocket 连接没有建立成功！");
+        }
+    }
+    
+    
+    function dostep(stepType){
+        if(!window.WebSocket){return;}
+        if(socket.readyState == WebSocket.OPEN){
+        	sid = getCookie("_sid");
+        	message = "{type:2,stepType:"+stepType+",sid:"+sid+",className:\""+get("className")+"\",thread:\""+get("thread")+"\",host:\""+get("host")+"\",port:"+get("port")+",line:"+get("line")+",field:\""+get("field")+"\"}";
+            socket.send(message);
+            var stat = document.getElementById('stepStat');
+            stat.innerHTML = "debug...";
+            stat.style.backgroundColor = "green";
+        }else{
+            alert("WebSocket 连接没有建立成功！");
+        }
+    }
+    
+    
+    function disconnect(){
+        if(!window.WebSocket){return;}
+        if(socket.readyState == WebSocket.OPEN){
+        	sid = getCookie("_sid");
+        	message = "{type:6,sid:"+sid+",className:\""+get("className")+"\",thread:\""+get("thread")+"\",host:\""+get("host")+"\",port:"+get("port")+"}";
+            socket.send(message);
+            var stat = document.getElementById('stepStat');
+            stat.innerHTML = "disconnect...";
+            stat.style.backgroundColor = "yellow";
+        }else{
+            alert("WebSocket 连接没有建立成功！");
+        }
+    }
+    
+    
+    function getStat(){
+        if(!window.WebSocket){return;}
+        if(socket.readyState == WebSocket.OPEN){
+        	sid = getCookie("_sid");
+        	message = "{type:7,sid:"+sid+",className:\""+get("className")+"\",thread:\""+get("thread")+"\",host:\""+get("host")+"\",port:"+get("port")+"}";
+            socket.send(message);
+        }else{
+            alert("WebSocket 连接没有建立成功！");
+        }
+    }
+    
+    
+    
+    
+
+
+</script>
+<body>
+<form onSubmit="return false;">
+    <!--<textarea name="message" id="message" cols=100 rows=5>
+    {type:1,className:\"com.shinemo.publish.resources.config.ProjectResource\",host:\"127.0.0.1\",port:8787,line:94}
+    </textarea> -->
+    类型：<input type="text" name="type" id="type" value="1">
+    <!-- com.shinemo.publish.client.ProjectQuery.type -->
+    <br>class：<input type="text" name="className" id="className" value="com.shinemo.publish.resources.config.ProjectResource">
+    <br>host：<input type="text" name="host" id="host" value="127.0.0.1">
+    <br>port：<input type="text" name="port" id="port" value="8787">
+    <br>line：<input type="text" name="line" id="line" value="94">
+    <br>field：<input type="text" name="field" id="field" value="type">
+    <br>thread：<input type="text" name="thread" id="thread" value="">
+    <br/><br/>
+    <input type="button" value="监听断点" onClick="send()"/> <input type="button" value="next step" onClick="dostep(2)"/> <input type="button" value="step over" onClick="dostep(3)"/>
+    <br/>
+    <input type="button" value="断开debug" onClick="disconnect()"/>
+    <input type="button" value="线程状态" onClick="getStat()"/>
+    <div id="stat"></div>
+    <br/>
+    <div id="stepStat"></div>
+    <hr color="green"/>
+    <h3>服务端返回的应答消息</h3>
+    <textarea id="responseText" style="width: 1024px;height: 300px;"></textarea>
+</form>
+</body>
+</html>

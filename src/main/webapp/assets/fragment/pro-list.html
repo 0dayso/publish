@@ -1,0 +1,417 @@
+<!--<link type="text/css" rel="stylesheet" href="./assets/css/fragment-css/project-bcffe1af47.css">-->
+
+<div class="-page-container">
+    <div class="pb-10px form-list">
+        <form class="cf bs-bb -search-form">
+            <div class="cf w-270px fl-l mt-5px">
+                <div class="fl-l ta-r mt-5px fz-14px w-40">项目标题</div>
+                <div class="w-60 fl-r pl-20px">
+                    <input name="title" />
+                </div>
+            </div>
+            <div class="cf fl-l mt-5px">
+                <div class="fl-l ta-r mt-5px fz-14px w-90px">资源类型</div>
+                <div class="w-200px fl-r pl-20px">
+                    <select name="type">
+                        <option value="0">JAVA</option>
+                        <option value="1">静态资源</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fl-l ml-10px mt-5px">
+                <a class="btn -ser-btn" href="javascript:void(0);">
+                    <i class="iconfont icon-search"></i>
+                    <span>搜索</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+<script class="-add-dialog-template" type="text/tpl">
+<div class="dialog-content">
+<div class="p-10px fz-14px form-list">
+    <form class="cf bs-bb">
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c mr-5px">
+                <header class="block-header bor-b-green">
+                    <i class="iconfont icon-menu mr-5px"></i>
+                    <span>项目概述</span>
+                </header>
+                <div>
+                	<div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">环境</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="env" placeholder="环境">
+                            	<option value="-1">讯盟</option>
+                                <option value="0">优办</option>
+                                <option value="1">彩云</option>
+                                <option value="2">麻绳</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">应用名</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input  name="name" type="text" validations="required;appNameRule" placeholder="建议与git名字一致（a-zA-Z0-9-._）">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目名</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="title" validations="required" type="text" placeholder="项目名">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目描述</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="descr" class="h-60px" placeholder="描述信息"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">Git地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="git" type="text"  validations="required"  placeholder="git@gitlab.shinemo.com:ub/publish.git" />
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布类型</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="type" class="-project-type" placeholder="发布类型">
+                                <option value="0">Java资源</option>
+                                <option value="1">前端资源</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">是否需要审核</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="needApproval" placeholder="发布类型">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="ownerId" class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">测试负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select class="-select-m" name="testId" style="width:100%"  placeholder="测试成员"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 项目资源 部分表单 ！ -->
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c ml-5px">
+                <header class="block-header bor-b-base-red">
+                    <i class="iconfont icon-home mr-5px"></i>
+                    <span>项目资源</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布机源码目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required" name="sourcePath" placeholder="/home/shinemo-safe/localgit/${app}/${app}">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">需要同步文件</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required"  name="fileName" placeholder="/home/shinemo-safe/localgit/publish/publish/target/publish.war">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required"  name="targetPath" placeholder="/usr/local/1_tomcat/webapps/">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器登录用户</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="remoteUser" placeholder="shinemo-safe">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preHost" validations="required"  class="h-60px" placeholder="10.132.21.123:9092"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="onlineHost" validations="required" class="h-60px" placeholder="10.132.21.123：9092  多台机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div  class="-java-project">
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">发布机编译日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="buildLog" validations="required" class="h-60px" placeholder="/home/shinemo-safe/localgit/publish/publish/build.log"></textarea>
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">应用日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="appLog" validations="required" class="h-60px" placeholder="/usr/local/1_tomcat/logs/catalina.out"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="split-line ml-10px mr-10px ta-c lh-200 text-base-red">
+                        <i class="iconfont icon-power mr-5px"></i>
+                        <span>高级任务（一般java发布时候使用）</span>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">健康检查uri</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="checkUri" class="h-60px" placeholder=":8080/contextpath/checkstatus"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发布编译脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preBuild" class="h-60px" placeholder="mvn clean package -Dmaven.test.skip=true -Ppre -f /home/shinemo-safe/localgit/mydb/mydb/"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上编译脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="onlineBuild" placeholder="mvn clean package -Dmaven.test.skip=true -Ponline -f /home/shinemo-safe/localgit/mydb/mydb/ "></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件前脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="beforeSync" placeholder="e.g. stop_tomcat.sh 这里的脚本会在文件同步前执行；多条脚本换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件后脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="afterSync" placeholder="e.g. start_tomcat.sh 这里的脚本会在文件同步后执行；多条脚本换行分割"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</script>
+<script class="-edit-dialog-template" type="text/tpl">
+<div class="dialog-content">
+<div class="p-10px fz-14px form-list">
+    <form class="cf bs-bb">
+        <input type="hidden" name="id" />
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c mr-5px">
+                <header class="block-header bor-b-green">
+                    <i class="iconfont icon-menu mr-5px"></i>
+                    <span>项目概述</span>
+                </header>
+                <div>
+                	<div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">环境</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="env" placeholder="环境">
+                            	<option value="-1">讯盟</option>
+                                <option value="0">优办</option>
+                                <option value="1">彩云</option>
+                                <option value="2">麻绳</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">应用名</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input  name="name" type="text" validations="required;appNameRule" placeholder="建议与git名字一致（a-zA-Z0-9-._）">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目名</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="title" validations="required" type="text" placeholder="项目名">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目描述</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="descr" class="h-60px" placeholder="描述信息"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">Git地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input name="git" type="text"  validations="required"  placeholder="git@gitlab.shinemo.com:ub/publish.git" />
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布类型</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="type" class="-project-type" placeholder="发布类型">
+                                <option value="0">Java资源</option>
+                                <option value="1">前端资源</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">是否需要审核</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="needApproval" placeholder="发布类型">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">项目负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select name="ownerId" class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">测试负责人</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <select class="-select-m" name="testId" style="width:100%"  placeholder="测试成员"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 项目资源 部分表单 ！ -->
+        <div class="w-50 mb-10px fl-l">
+            <div class="w-100 min-h-300px bor-cor-g-c ml-5px">
+                <header class="block-header bor-b-base-red">
+                    <i class="iconfont icon-home mr-5px"></i>
+                    <span>项目资源</span>
+                </header>
+                <div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">发布机源码目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required" name="sourcePath" placeholder="/home/shinemo-safe/localgit/${app}/${app}">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">需要同步文件</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required"  name="fileName" placeholder="/home/shinemo-safe/localgit/publish/publish/target/publish.war">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器目录</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" validations="required"  name="targetPath" placeholder="/usr/local/1_tomcat/webapps/">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">目标机器登录用户</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <input type="text" name="remoteUser" placeholder="shinemo-safe">
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preHost" validations="required"  class="h-60px" placeholder="10.132.21.123:9092"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上机器地址</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="onlineHost" validations="required" class="h-60px" placeholder="10.132.21.123：9092  多台机器列表换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div  class="-java-project">
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">发布机编译日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="buildLog" validations="required" class="h-60px" placeholder="/home/shinemo-safe/localgit/publish/publish/build.log"></textarea>
+                            </div>
+                        </div>
+                        <div class="cf p-10px">
+                            <div class="w-20 fl-l ta-r mt-5px fz-14px">应用日志</div>
+                            <div class="w-80 fl-r pl-20px">
+                                <textarea name="appLog" validations="required" class="h-60px" placeholder="/usr/local/1_tomcat/logs/catalina.out"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="split-line ml-10px mr-10px ta-c lh-200 text-base-red">
+                        <i class="iconfont icon-power mr-5px"></i>
+                        <span>高级任务（一般java发布时候使用）</span>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">健康检查uri</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="checkUri" class="h-60px" placeholder=":8080/contextpath/checkstatus" ></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">预发布编译脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea name="preBuild" class="h-60px" placeholder="mvn clean package -Dmaven.test.skip=true -Ppre -f /home/shinemo-safe/localgit/mydb/mydb/ "></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">线上编译脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="onlineBuild" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件前脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="beforeSync" placeholder="e.g. stop_tomcat.sh 这里的脚本会在文件同步前执行；多条脚本换行分割"></textarea>
+                        </div>
+                    </div>
+                    <div class="cf p-10px">
+                        <div class="w-20 fl-l ta-r mt-5px fz-14px">同步文件后脚本</div>
+                        <div class="w-80 fl-r pl-20px">
+                            <textarea class="h-60px" name="afterSync" placeholder="e.g. start_tomcat.sh 这里的脚本会在文件同步后执行；多条脚本换行分割"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</script>
+
+<!-- 添加项目成员对话框 -->
+<script class="-add-member-dialog" type="text/tpl">
+    <div class="dialog-content">
+        <div class=" fz-14px">
+            <div class="cf p-10px">
+                <div class="w-70 fl-l  mr-10px">
+                    <select class="-select-m" style="width:100%"  placeholder="项目负责人"></select>
+                </div>
+                <div class="fl-l ta-r fz-14px" >
+                    <span id="add-member" class="btn fw-n text-base-red">
+                        <i class="iconfont icon-add va-m"></i>
+                        <span class="va-m">添加成员</span>
+                    </span>
+                </div>
+            </div>
+            <div class="-m-grid-container"></div>
+        </div>
+    </div>
+</script>
+
+<!-- 验证 对话框 -->
+<script class="-validation-dialog" type="text/tpl">
+    <div class="dialog-content h-100px"></div>
+</script>
+
+<script src="./assets/js/fragment/project-46c4c26b5e.js" async="async"></script>

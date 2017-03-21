@@ -1,0 +1,69 @@
+<link type="text/css" rel="stylesheet" href="./assets/css/fragment-css/health-check.css">
+<div class="-page-container w-100 h-100 ov-a" >
+    <div class="pb-10px form-list">
+        <form class="cf bs-bb -search-form">
+            <div class="cf fl-l mt-5px h-30px" style="width: 400px">
+                <div class="fl-l ta-r mt-5px fz-14px w-90px">过滤</div>
+                <div class="fl-r pl-20px" style="width: 300px">
+                    <input type="text" name="dir" validations="required" />
+                </div>
+            </div>
+            <div class="fl-l ml-10px mt-5px">
+                <a class="btn -ser-btn" href="javascript:void(0);">
+                    <i class="iconfont icon-search"></i>
+                    <span>搜索</span>
+                </a>
+            </div>
+            <div class="fl-l ml-10px mt-5px">
+                <a class="btn -check-all-status" href="javascript:void(0);">
+                    <i class="iconfont icon-confirm"></i>
+                    <span>检查全部</span>
+                </a>
+            </div>
+        </form>
+    </div>
+    <ul id="project-list-container" class="fz-14px bs-bb bor-t-brand cf pt-20px project-status-container"></ul>
+</div>
+<script src="./assets/js/fragment/health-check.js" async="async"></script>
+<script type="text/tpl" id="project-status-item-tpl">
+<li class={checkResultClass} >
+    <div class="ml-10px mr-10px bor-r-5px bor-cor-g-c bor-sdw-6px">
+        <header class="block-header bor-b-yellow fw-b">
+            <span>{name}</span>
+        </header>
+        <div  class="ov-a">
+            <ul class="p-5px w-100 ov-a h-150px">
+                <li>
+                    <span class="d-ib va-m w-25 ta-r">检查URI:</span>
+                    <span class="d-ib va-m ml-10px">{checkUri}</span>
+                </li>
+                <li>
+                    <span class="d-ib va-m w-25 ta-r">环境:</span>
+                    <span class="d-ib va-m ml-10px">{env}</span>
+                </li>
+                <li class="host-container">{hosts}</li>
+                <li>
+                    <span class="d-ib va-m w-25 ta-r">tomcat:</span>
+                    <span class="d-ib va-m ml-10px">{tomcat}</span>
+                </li>
+            </ul>
+            <div class="bor-t-c pt-5px pb-5px pl-10px pr-10px cf">
+                <span class="btn -check-status-btn {disabled}" data-id={id}>
+                    <i class="iconfont icon-confirm"></i>
+                    <span>检查</span>
+                </span>
+                {configError}
+                <span class="fl-r">
+                    <i class="iconfont icon-info fz-22px status-icon"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</li>
+</script>
+<script type="text/tpl">
+<li class="host-success">
+    <span class="d-ib va-m w-25 ta-r">host-{index}:</span>
+    <span class="d-ib va-m ml-10px">{host}</span>
+</li>
+</script>

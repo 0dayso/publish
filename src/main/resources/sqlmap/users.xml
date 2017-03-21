@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.publish.mapper.UsersMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result_map" type="com.shinemo.publish.client.Users" >
+		<id column="id" property="id"/>
+		<result property="ssoUserId" column="user_id"/>
+		<result property="mobile" column="mobile"/>
+		<result property="mail" column="mail"/>
+		<result property="name" column="name"/>
+		<result property="role" column="role"/>
+		<result property="type" column="type"/>
+		<result property="flag" column="flag"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="gmtCreate" column="gmt_create"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, user_id, mobile, mail, name, role, type, flag, gmt_modified, gmt_create
+	</sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="ssoUserId != null">and user_id = #{ssoUserId}</if>
+					<if test="mobile != null">and mobile = #{mobile}</if>
+					<if test="mail != null">and mail = #{mail}</if>
+					<if test="name != null">and name = #{name}</if>
+					<if test="role != null">and role = #{role}</if>
+					<if test="type != null">and type = #{type}</if>
+					<if test="flag != null">and flag = #{flag}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    
+    
+    <!-- 查询结果集 -->
+    <select id="listByName" resultMap="result_map"
+            parameterType="java.util.Map">
+        select
+        <include refid="columns"/>
+        from users
+            where flag = 1
+            <if test="keyword !=null">
+            and name like CONCAT('${keyword}','%')
+        	</if>
+            limit #{limit, jdbcType=INTEGER}
+    </select>
+
+
+	<!-- 查询结果集 -->
+    <select id="find" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.UsersQuery">
+        select
+        <include refid="columns"/>
+        from users
+        <include refid="conditions"/>
+        <if test="orderByType != null and orderByType != ''"> order by ${orderByType}</if>
+        <if test="paging !=null">
+            limit #{startRow, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result_map" parameterType="com.shinemo.publish.client.UsersQuery">
+        select
+        <include refid="columns"/>
+        from users
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.publish.client.UsersQuery">
+        select count(*) from users
+        <include refid="conditions"/>
+    </select>
+
+	<!-- 删除 -->
+    <delete id="delete" parameterType="com.shinemo.publish.client.UsersQuery">
+        delete from users where id = #{id}
+    </delete>
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.publish.client.Users">
+        insert into
+		users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+                    <if test="ssoUserId != null">
+						user_id,
+					</if>
+                    <if test="mobile != null">
+						mobile,
+					</if>
+                    <if test="mail != null">
+						mail,
+					</if>
+                    <if test="name != null">
+						name,
+					</if>
+                    <if test="role != null">
+						role,
+					</if>
+                    <if test="type != null">
+						type,
+					</if>
+                    <if test="flag != null">
+						flag,
+					</if>
+					gmt_modified,
+					gmt_create,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    <if test="ssoUserId != null">
+						#{ssoUserId, jdbcType=BIGINT},
+                    </if>
+                    <if test="mobile != null">
+						#{mobile, jdbcType=VARCHAR},
+                    </if>
+                    <if test="mail != null">
+						#{mail, jdbcType=VARCHAR},
+                    </if>
+                    <if test="name != null">
+						#{name, jdbcType=VARCHAR},
+                    </if>
+                    <if test="role != null">
+						#{role, jdbcType=VARCHAR},
+                    </if>
+                    <if test="type != null">
+						#{type, jdbcType=INTEGER},
+                    </if>
+                    <if test="flag != null">
+						#{flag, jdbcType=INTEGER},
+                    </if>
+                    now(),
+                    now(),
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.publish.client.Users">
+        UPDATE users
+        <set>
+            <if test="ssoUserId != null">
+                user_id = #{ssoUserId, jdbcType=BIGINT},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile, jdbcType=VARCHAR},
+            </if>
+            <if test="mail != null">
+                mail = #{mail, jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role, jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                flag = #{flag, jdbcType=INTEGER},
+            </if>
+            gmt_modified = now(),
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.publish.mapper.ApplyMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result_map" type="com.shinemo.publish.client.Apply" >
+		<id column="id" property="id"/>
+		<result property="title" column="title"/>
+		<result property="gitBranch" column="git_branch"/>
+		<result property="userId" column="user_id"/>
+		<result property="flag" column="flag"/>
+		<result property="status" column="status"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="log" column="log"/>
+		<result property="projectId" column="project_id"/>
+		<result property="idx" column="idx"/>
+		<result property="gitVersion" column="git_version"/>
+		<result property="fileList" column="file_list"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, title, git_branch, user_id, flag, status, gmt_create, gmt_modified, log,project_id,idx,git_version,file_list
+	</sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="title != null">and title = #{title}</if>
+					<if test="gitBranch != null">and git_branch = #{gitBranch}</if>
+					<if test="userId != null">and user_id = #{userId}</if>
+					<if test="flag != null">and flag = #{flag}</if>
+					<if test="status != null">and status = #{status}</if>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+					<if test="projectId != null">and project_id = #{projectId}</if>
+					<if test="startDate != null">and gmt_create > #{startDate}</if>
+					<if test="endDate != null">and  #{endDate} > gmt_create </if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <!-- 查询结果集 -->
+    <select id="find" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.ApplyQuery">
+        select
+        <include refid="columns"/>
+        from apply
+        <include refid="conditions"/>
+        <if test="orderByType != null and orderByType != ''"> order by ${orderByType}</if>
+        <if test="paging !=null">
+            limit #{startRow, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+
+	<!-- 查询结果集 -->
+    <select id="getNewApplys" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.ApplyQuery">
+        select
+        a.id, a.title, a.git_branch, a.user_id, a.flag, a.status, a.gmt_create, a.gmt_modified, a.log,a.project_id,a.idx
+        from apply a,project_user pu
+        where a.project_id = pu.project_id and ( a.flag = 0 or a.flag = 2 ) and a.status = 8 and pu.user_id = #{userId} and pu.type = 1
+            limit #{startRow, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+    
+    
+    <!-- 查询结果集 -->
+    <select id="getNewApplysCount" resultType="long"
+            parameterType="com.shinemo.publish.client.ApplyQuery">
+        select
+        count(*)
+        from apply a,project_user pu
+        where a.project_id = pu.project_id and ( a.flag = 0 or a.flag = 2 ) and a.status = 8 and pu.user_id = #{userId} and pu.type = 1
+    </select>
+    
+    
+    
+    <!-- 查询同一种类正在发布的发布单 -->
+    <select id="getProcessingApply" resultMap="result_map"
+            parameterType="com.shinemo.publish.client.ApplyQuery">
+        select
+        id, title, git_branch, user_id, flag, status, gmt_create, gmt_modified, log,project_id,idx
+        from apply 
+        where status >= 0 and 15 > status
+        and ( flag = 0 or flag = 2 ) 
+        and gmt_modified > #{gmtModified}
+        and project_id in
+	    (
+	        select id from  project where git in (
+				select git from project where id = #{projectId} 
+			)
+		)
+    </select>
+    
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result_map" parameterType="com.shinemo.publish.client.ApplyQuery">
+        select
+        <include refid="columns"/>
+        from apply
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.publish.client.ApplyQuery">
+        select count(*) from apply
+        <include refid="conditions"/>
+    </select>
+
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.publish.client.Apply">
+        insert into
+		apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+                    <if test="title != null">
+						title,
+					</if>
+                    <if test="gitBranch != null">
+						git_branch,
+					</if>
+                    <if test="userId != null">
+						user_id,
+					</if>
+                    <if test="flag != null">
+						flag,
+					</if>
+                    <if test="status != null">
+						status,
+					</if>
+					gmt_create,
+					gmt_modified,
+                    <if test="log != null">
+						log,
+					</if>
+					<if test="projectId != null">
+						project_id,
+					</if>
+					<if test="idx != null">
+						idx,
+					</if>
+					<if test="gitVersion != null">
+						git_version,
+					</if>
+					<if test="fileList != null">
+						file_list,
+					</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    <if test="title != null">
+						#{title, jdbcType=VARCHAR},
+                    </if>
+                    <if test="gitBranch != null">
+						#{gitBranch, jdbcType=VARCHAR},
+                    </if>
+                    <if test="userId != null">
+						#{userId, jdbcType=BIGINT},
+                    </if>
+                    <if test="flag != null">
+						#{flag, jdbcType=INTEGER},
+                    </if>
+                    <if test="status != null">
+						#{status, jdbcType=INTEGER},
+                    </if>
+                    now(),
+                    now(),
+                    <if test="log != null">
+						#{log, jdbcType=LONGVARCHAR},
+                    </if>
+                    <if test="projectId != null">
+						#{projectId, jdbcType=LONGVARCHAR},
+                    </if>
+                    <if test="idx != null">
+						#{idx, jdbcType=INTEGER},
+                    </if>
+                    <if test="gitVersion != null">
+						#{gitVersion, jdbcType=VARCHAR},
+                    </if>
+                    <if test="fileList != null">
+						#{fileList, jdbcType=VARCHAR},
+                    </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.publish.client.Apply">
+        UPDATE apply
+        <set>
+            <if test="title != null">
+                title = #{title, jdbcType=VARCHAR},
+            </if>
+            <if test="gitBranch != null">
+                git_branch = #{gitBranch, jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId, jdbcType=BIGINT},
+            </if>
+            <if test="flag != null">
+                flag = #{flag, jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER},
+            </if>
+            gmt_modified = now(),
+            <if test="log != null">
+                log = #{log, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="idx != null">
+                idx = #{idx, jdbcType=INTEGER},
+            </if>
+            <if test="gitVersion != null">
+                git_version = #{gitVersion, jdbcType=VARCHAR},
+            </if>
+            <if test="fileList != null">
+                file_list = #{fileList, jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

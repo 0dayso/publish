@@ -1,0 +1,48 @@
+@import '../modules/dselect';
+.block-header {
+  border-bottom: 4px #2dc3e8 solid;
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.bor-b-yellow {
+  border-bottom: 4px solid #ffce55;
+}
+
+.bor-b-base-red {
+  border-bottom: 4px solid #f54545;
+}
+
+.bor-b-green {
+  border-bottom: 4px solid #a0d468;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.h-60px {
+  height: 60px;
+}
+
+.split-line {
+  border-bottom: 2px solid #f54545;
+}
+
+.disabled-field {
+  color: #ccc;
+}
+
+.del-member, .set-member {
+  color: #666;
+}
+
+.del-member:hover, .set-member {
+  color: #f54545;
+}

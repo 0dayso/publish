@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="./assets/css/fragment-css/zTreeStyle-f9c9494911.css">
+<div class="-page-container"></div>
+<script src="./assets/js/fragment/publish-order-c976842764.js" async="async"></script>
+<script class="-add-dialog-template" type="text/tpl">
+    <div class="dialog-content p-20px">
+        <form>
+            <div class="item">
+                <label>
+                    <span>所属项目：</span>
+                    <select name="projectId" validations="required" ></select>
+                </label>
+            </div>
+            <div class="item -chosen-container d-n">
+                <label>
+                    <input type="hidden" name="fileList" disabled="disabled" />
+                    <span></span>
+                    <input type="button" class="btn btn-warning -chosen-file" value="指定文件" />
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>标题：</span>
+                    <input type="text" name="title" validations="required" placeholder="发布单标题" />
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>Git 分支：</span>
+                    <select name="gitBranch" validations="required" ></select>
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>Git 版本号：</span>
+                    <select name="gitVersion" value="default" ></select>
+                </label>
+            </div>
+        </form>
+    </div>
+</script>
+<script class="-edit-dialog-template" type="text/tpl">
+    <div class="dialog-content p-20px">
+        <form>
+            <input type="hidden" name="id" />
+             <div class="item">
+                <label>
+                    <span>所属项目：</span>
+                    <select name="projectId" disabled="true" validations="required" ></select>
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>标题：</span>
+                    <input type="text" name="title" validations="required" placeholder="发布单标题" />
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>Git 分支：</span>
+                    <select name="gitBranch" validations="required" ></select>
+                </label>
+            </div>
+            <div class="item">
+                <label>
+                    <span>Git 版本号：</span>
+                    <select name="gitVersion" value="default" ></select>
+                </label>
+            </div>
+        </form>
+    </div>
+</script>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <tools> 
+	<toolbox scope="application">
+        <tool class="com.shinemo.power.web.util.PowerUtil"/>
+    </toolbox>
+    <tool>
+    <key>date</key>
+    <scope>application</scope>
+    <class>org.apache.velocity.tools.generic.DateTool</class>
+  </tool>
+</tools> -->
+<!-- <toolbox>
+  <tool>
+    <key>powerUtil</key>
+    <scope>application</scope>
+    <class>com.shinemo.power.web.util.PowerUtil</class>
+  </tool>
+</toolbox> -->

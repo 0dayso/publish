@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-autowire="byName">
+
+
+	<!-- shell websocket -->
+	<bean id="shellSocketAuthService" class="com.shinemo.publish.websocket.ShellSocketAuthService"/>
+    
+    <bean id="shellSocketServer" class="com.shinemo.publish.websocket.ShellSocketServer"/>
+
+    <bean id="shellSocketBootstrap" class="com.shinemo.publish.websocket.ShellSocketBootstrap" init-method="init"/>
+    
+    
+    <!-- debug websocket -->
+    <bean id="debugSocketAuthService" class="com.shinemo.publish.debug.websocket.DebugSocketAuthService"/>
+    
+    <bean id="debugSocketServer" class="com.shinemo.publish.debug.websocket.DebugSocketServer"/>
+
+    <bean id="debugSocketBootstrap" class="com.shinemo.publish.debug.websocket.DebugSocketBootstrap" init-method="init"/>
+    
+
+</beans>
